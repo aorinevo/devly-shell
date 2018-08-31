@@ -9,11 +9,12 @@ function initShell(shellExports, filePath) {
   let newLines = '';
 
   for( let shellExport  of shellExports ){
-    const { name } = shellExport;
-    if( result.indexOf(`export ${name}` === -1)){
-      newLines = `${newLines}export name=${value}\n`;
+    const { name, value } = shellExport;
+    if( result.indexOf(`export ${name}`) === -1 ){
+      newLines = `${newLines}export ${name}=${value}\n`;
+    } else {
+      result = result.replace(new RegExp(`export ${name}=.+`,'gm'), `${newLines}export ${name}=${value}`) ;
     }
-    result = result.replace(new RegExp(`export ${name}=`,'gm') );
   }
 
   if (newLines || data !== result) {
@@ -21,7 +22,7 @@ function initShell(shellExports, filePath) {
       result = `${newLines}\n${result}`;
     }
     fs.writeFileSync(filePath, result, 'utf8');
-    spawn(`source ${filePath}`, [], {
+    spawnSync(`source ${filePath}`, [], {
       shell: true,
       stdio: 'inherit',
     });
@@ -33,7 +34,7 @@ function initShell(shellExports, filePath) {
 
 module.exports = class Shell {
   init() { // eslint-disable-line class-methods-use-this
-    const {exports: shellExports, filePath } = store.getState().shell;
+    const {exports: shellExports, path: filePath } = store.getState().shell;
     return initShell(shellExports, filePath);
   }
 };
