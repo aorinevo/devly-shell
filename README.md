@@ -56,12 +56,12 @@ require('./shell.js');
 
 // plugins/shell.js
 const {store} = require('@devly/devly-store');
-const {addApacheConfig, addApacheCommands} = require('@devly/devly-shell/actions');
+const {addShellConfig, addShellCommands} = require('@devly/devly-shell/actions');
 const {dispatch} = store;
 
 require('@devly/devly-shell');
 
-dispatch(addApacheConfig(require('./manifests/shell')));
+dispatch(addShellConfig(require('./manifests/shell')));
 
-dispatch(addApacheCommands());
+dispatch(addShellCommands());
 ```
