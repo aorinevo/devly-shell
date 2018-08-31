@@ -21,7 +21,7 @@ Use `addShellConfig` action creator to update the shell state in the devly-store
 // mainfests/shell.js
 
 module.exports = {
-  path: '~/.zshrc',
+  path: '/Users/aorinevo/.zshrc',
   exports: [
     {
       name: 'JAVA_HOME',
